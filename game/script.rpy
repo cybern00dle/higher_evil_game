@@ -16,6 +16,7 @@ define screamer = MultipleTransition([False, Pause(2.0), True])
 define blink = Fade(0.5, 0.5, 0.5)
 define travel = Fade(0.5, 1.0, 0.5)
 
+default flashlight = False
 default work = True
 
 label splashscreen:
@@ -298,8 +299,47 @@ label greet:
     "{i}Я стоял там в недоумении и холодном поту ещё пару минут, пока не решил списать этот бред на недосып и просто пойти на следующую пару.{/i}"
 
 label go_further:
-    pass
+    "{i}Я решил пойти в одном направлении, пока не вспомню номер кабинета.{/i}"
+    scene bg hallway2
+    with pause_fade
+    scene bg hallway4
+    with pause_fade
+    scene bg door_closed
+    with pause_fade
+    "Вроде здесь."
+    "{i}Всё бы ничего, но я слышал странные звуки, идущие из кабинета.{/i}"
+    "{i}Чавканье?{/i}"
+    "{i}Узнать наверняка можно было лишь одним способом…{/i}"
 
+    menu:
+        "Зайти":
+            jump enter
+        "Постучаться":
+            jump knock
+
+label enter:
+    "{i}Любопытство победило, и я бесцеремонно зашёл внутрь.{/i}"
+    show creature back
+    with fade
+    "{i}Что ж… Это был не учебный офис, а самая обычная аудитория.{/i}"
+    "{i}Было темно, поэтому сначала я ничего не разглядел. Но потом я увидел чей-то огромный силуэт в конце аудитории.{/i}"
+    "{i}Кроме того, в аудитории стоял ужасный запах.{/i}"
+    "{i}Мне стало не по себе, начала кружится голова…{/i}"
+    show creature static
+    with blink
+    "{i}!!!{/i}"
+    "{i}Вонь стала ещё пронзительнее.{/i}"
+    "{i}От страха и отвращения у меня подкосило ноги.{/i}"
+    "{i}Бежать я не мог - меня будто парализовало.{/i}"
+    "П-"
+    "Помогите!"
+    show creature screamer
+    with screamer
+
+    return
+
+label knock:
+    pass
 
 label bad_work:
     "{i}...{/i}"
