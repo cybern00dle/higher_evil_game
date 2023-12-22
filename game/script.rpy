@@ -95,10 +95,20 @@ label sleep_in:
     show teacher static
     with fade
     "{i}Преподавательница уже подошла ко мне, ожидая моей работы:{/i}"
-    teacher ""
-    "{i}...{/i}"
-    ""
+    teacher "Белогов, Ваша работа?"
+    "{i}Вздохнув, я приготовился к раскаяниям.{/i}"
+    "Я забыл её."
     show teacher silhouette
     with fade
     "{i}...{/i}"
+    "{i}В глазах будто потемнело…{/i}"
+    "{i}Или передо мной была уже не Марья Ивановна.{/i}"
+    with Pause(3)
+    show teacher eyes
+    "???" "{color=#ff0000}Забыли?{/color}"
+    show teacher screamer
+    with Pause(3)
+    scene black
+    with fade
 
+    return
