@@ -2,6 +2,10 @@
 define granny = Character(_("Бабушка"), color="#c8ffc8")
 define teacher = Character(_("Марья Ивановна"), color="#c8ffc8")
 
+define pause_fade = MultipleTransition(Fade(0.5, 0.0, 0.5), Pause(1.0))
+define blink = Fade(0.5, 0.5, 0.5)
+define travel = Fade(0.5, 1.0, 0.5)
+
 default work = True
 
 label splashscreen:
@@ -48,14 +52,10 @@ label start:
 label get_up:
     stop music
     "{i}Надо вставать. Давай, Стас, соберись!{/i}"
-    scene black
-    with fade
     "Ну погнали."
-    scene black
-    with fade
 
-    scene bg bus
-    with fade
+    scene bg bus1
+    with travel
     "{i}Каждое буднее утро начинается одинаково. Я просыпаюсь, не успеваю позавтракать или почистить зубы и еду на пары. Это утро ничем не отличалось....{/i}"
     "{i}В унике меня ждала очередная куча новых заданий со сроками, а потом и сессия, где я бы не спал сутками.{/i}"
     "{i}Тогда я только и мог думать о том, вот бы всё это поскорее закончилось…{/i}"
@@ -74,7 +74,7 @@ label get_up:
     show granny screamer
     "???" "{color=#ff0000}УСТУПИ, Я СКАЗАЛА{/color}"
 
-    scene bg bus
+    scene bg bus2
     with fade
     "{i}Я не встал, а спрыгнул с сидения и отошёл в сторону. Бабка тут же села на моё место так, будто на нём были написаны её имя, фамилия и дата рождения.{/i}"
     "{i}А может и дата смерти, судя по её костлявым рукам.{/i}"
@@ -112,10 +112,8 @@ label sleep_in:
     jump uni_entrance
 
 label uni_entrance:
-    scene black
-    with fade
     scene bg entrance_light
-    with fade
+    with travel
     "{i}А вот и причина моей бессонницы, гнездо невылупившихся научных достижений, вскормленных образовательной бюрократией…?{/i}"
     "{i}...{/i}"
     "{i}О чём это я?{/i}"
@@ -124,11 +122,9 @@ label uni_entrance:
     scene black
     with fade
     scene bg class_entrance_light
-    with fade
-    with Pause(2)
+    with pause_fade
     scene bg class_light
-    with fade
-    with Pause(2)
+    with pause_fade
     scene bg class_seat
     with fade
     "{i}На пару я чуть опоздал, но ничего страшного - Марья Ивановна не заметила.{/i}"
@@ -157,6 +153,31 @@ label good_work:
     "{i}…она уже положила передо мной красную папку с файлами и ушла{/i}"
     "Хорошо..."
 
+    "{i}Пришлось подняться на второй этаж.{/i}"
+    scene bg stairs4
+    with pause_fade
+    scene bg stairs3
+    with pause_fade
+    scene bg stairs1
+    with pause_fade
+    scene bg hallway1
+    with pause_fade
+    "{i}Я не мог вспомнить, какой из кабинетов был учебным офисом.{/i}"
+    "{i}А спросить было стыдно…{/i}"
+    "{i}Третий курс всё же.{/i}"
+
+    menu:
+        "Оглядеться":
+            jump look_around
+        "Пойти дальше":
+            jump go_further
+
+label look_around:
+    pass
+
+label go_further:
+    pass
+
 label bad_work:
     "{i}...{/i}"
     "{i}Как вдруг понял, что доклада-то у меня с собой и не было.{/i}"
@@ -172,7 +193,7 @@ label bad_work:
     "{i}...{/i}"
     "{i}В глазах будто потемнело…{/i}"
     "{i}Или передо мной была уже не Марья Ивановна.{/i}"
-    with Pause(3)
+    with Pause(2)
     show teacher eyes
     "???" "{color=#ff0000}Забыли?{/color}"
     show teacher screamer
