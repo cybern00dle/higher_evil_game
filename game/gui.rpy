@@ -68,22 +68,22 @@ define gui.name_text_font = "fonts/better-vcr-5.2.ttf"
 define gui.interface_text_font = "fonts/better-vcr-5.2.ttf"
 
 ## Размер нормального текста диалога.
-define gui.text_size = 22
+define gui.text_size = 26
 
 ## Размер имён персонажей.
-define gui.name_text_size = 30
+define gui.name_text_size = 34
 
 ## Размер текста в пользовательском интерфейсе.
-define gui.interface_text_size = 22
+define gui.interface_text_size = 26
 
 ## Размер заголовков в пользовательском интерфейсе.
-define gui.label_text_size = 24
+define gui.label_text_size = 28
 
 ## Размер текста на экране уведомлений.
-define gui.notify_text_size = 16
+define gui.notify_text_size = 20
 
 ## Размер заголовка игры.
-define gui.title_text_size = 50
+define gui.title_text_size = 54
 
 
 ## Главное и игровое меню. #####################################################

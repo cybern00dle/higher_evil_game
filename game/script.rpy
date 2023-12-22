@@ -1,5 +1,8 @@
 ﻿define headman = Character(_("Староста"), color="#c8ffc8")
+define granny = Character(_("Бабушка"), color="#c8ffc8")
 define teacher = Character(_("Марья Ивановна"), color="#c8ffc8")
+
+default work = True
 
 label splashscreen:
     scene black
@@ -11,7 +14,7 @@ label splashscreen:
     hide text with dissolve
     with Pause(1)
 
-    show text "Приятного пробуждения" with dissolve
+    show text "Приятного пробуждения." with dissolve
     with Pause(5)
 
     hide text with dissolve
@@ -39,10 +42,45 @@ label start:
         "Встать":
             jump get_up
         "Поспать подольше":
+            $ work = False
             jump sleep_in
 
 label get_up:
-    pass
+    stop music
+    "{i}Надо вставать. Давай, Стас, соберись!{/i}"
+    scene black
+    with fade
+    "Ну погнали."
+    scene black
+    with fade
+
+    scene bg bus
+    with fade
+    "{i}Каждое буднее утро начинается одинаково. Я просыпаюсь, не успеваю позавтракать или почистить зубы и еду на пары. Это утро ничем не отличалось....{/i}"
+    "{i}В унике меня ждала очередная куча новых заданий со сроками, а потом и сессия, где я бы не спал сутками.{/i}"
+    "{i}Тогда я только и мог думать о том, вот бы всё это поскорее закончилось…{/i}"
+    "{i}Хотелось спать…{/i}"
+    "{i}...{/i}"
+    scene black
+    with fade
+    "???" "{color=#ff0000}ВНУЧОК{/color}"
+
+    show granny static
+    with fade
+    granny "Уступи бабуле место."
+    "{i}Бабка… Почему она не могла сесть куда-то ещё? В автобусе было полно свободных мест. Я только открыл рот, чтобы защитить своё право на сидение:{/i}"
+    "Но там же есть ещё свободные-"
+    with Pause(2)
+    show granny screamer
+    "???" "{color=#ff0000}УСТУПИ, Я СКАЗАЛА{/color}"
+
+    scene bg bus
+    with fade
+    "{i}Я не встал, а спрыгнул с сидения и отошёл в сторону. Бабка тут же села на моё место так, будто на нём были написаны её имя, фамилия и дата рождения.{/i}"
+    "{i}А может и дата смерти, судя по её костлявым рукам.{/i}"
+    "{i}Оставшиеся полчаса дороги я сидел от неё как можно дальше…{/i}"
+
+    jump uni_entrance
 
 label sleep_in:
     "{i}В пень это ваше высшее образование! Я спать хочу!{/i}"
@@ -50,7 +88,6 @@ label sleep_in:
 
     scene black
     with fade
-
     play music "audio/vibration.mp3"
     "{color=#ff0000}БЗЗЗ-БЗЗЗ{/color}"
     "{i}?{/i}"
@@ -60,7 +97,7 @@ label sleep_in:
     play music "audio/beep.mp3" noloop
 
     "Алё?"
-    "{color=#ff0000}СТАС, ТЫ ДУРНОЙ? ТЫ ГДЕ?{/color}"
+    "???" "{color=#ff0000}СТАС, ТЫ ДУРНОЙ? ТЫ ГДЕ?{/color}"
     "{i}Это был голос старосты. Не самого нежного характером человека.{/i}"
     "Я дома"
     headman "Дома он! Ну зашибись!"
@@ -72,6 +109,11 @@ label sleep_in:
     "{i}И как я мог забыть про дедлайн? Я же эту работу последние дня два писал.{/i}"
     "{i}Поспать подольше не удалось…{/i}"
 
+    jump uni_entrance
+
+label uni_entrance:
+    scene black
+    with fade
     scene bg entrance_light
     with fade
     "{i}А вот и причина моей бессонницы, гнездо невылупившихся научных достижений, вскормленных образовательной бюрократией…?{/i}"
@@ -83,15 +125,42 @@ label sleep_in:
     with fade
     scene bg class_entrance_light
     with fade
+    with Pause(2)
     scene bg class_light
+    with fade
+    with Pause(2)
+    scene bg class_seat
     with fade
     "{i}На пару я чуть опоздал, но ничего страшного - Марья Ивановна не заметила.{/i}"
     "{i}Я тихо отсидел все 80 минут и собирался сдать доклад.{/i}"
+
+    if work:
+        jump good_work
+    else:
+        jump bad_work
+
+label good_work:
+    show teacher static
+    with fade
+    "{i}Преподавательница уже подошла ко мне, ожидая моей работы:{/i}"
+    teacher "Станислав, Ваша работа?"
+    "{i}Я передал ей доклад в руки и лишь на секунду встретился с ней глазами.{/i}"
+    "{i}Что-то мне подсказывало, что мой ангел-хранитель спас мою жизнь, не позволив забыть этот доклад дома…{/i}"
+    teacher "Спасибо..."
+
+    teacher "Станислав, будьте добры отнести эту папку на второй этаж в учебный офис."
+    scene bg table
+    with fade
+    "{i}Прежде чем я успел придумать отговорку или хотя бы осознать слова Марьи Ивановны,...{/i}"
+    scene bg folder
+    with fade
+    "{i}…она уже положила передо мной красную папку с файлами и ушла{/i}"
+    "Хорошо..."
+
+label bad_work:
     "{i}...{/i}"
     "{i}Как вдруг понял, что доклада-то у меня с собой и не было.{/i}"
     "{i}Я забыл его впопыхах!{/i}"
-    scene bg class_seat
-    with fade
     show teacher static
     with fade
     "{i}Преподавательница уже подошла ко мне, ожидая моей работы:{/i}"
