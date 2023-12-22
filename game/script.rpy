@@ -1,8 +1,18 @@
 ﻿define headman = Character(_("Староста"), color="#c8ffc8")
 define granny = Character(_("Бабушка"), color="#c8ffc8")
 define teacher = Character(_("Марья Ивановна"), color="#c8ffc8")
+define cultist = Character(_("Культист"), color="#c8ffc8")
 
-define pause_fade = MultipleTransition(Fade(0.5, 0.0, 0.5), Pause(1.0))
+define circling = MultipleTransition([
+    False, fade, "bg ground1_dark.png",
+    pause, "bg ground1_dark.png",
+    fade, "bg ground3_dark.png",
+    pause, "bg ground1_dark.png",
+    fade, "bg hallway6_dark.png",
+    pause, "bg ground1_dark.png",
+    fade, True])
+define pause_fade = MultipleTransition([False, fade, True, Pause(1.0), True])
+define screamer = MultipleTransition([False, Pause(2.0), True])
 define blink = Fade(0.5, 0.5, 0.5)
 define travel = Fade(0.5, 1.0, 0.5)
 
@@ -70,8 +80,8 @@ label get_up:
     granny "Уступи бабуле место."
     "{i}Бабка… Почему она не могла сесть куда-то ещё? В автобусе было полно свободных мест. Я только открыл рот, чтобы защитить своё право на сидение:{/i}"
     "Но там же есть ещё свободные-"
-    with Pause(2)
     show granny screamer
+    with screamer
     "???" "{color=#ff0000}УСТУПИ, Я СКАЗАЛА{/color}"
 
     scene bg bus2
@@ -112,7 +122,7 @@ label sleep_in:
     jump uni_entrance
 
 label uni_entrance:
-    scene bg entrance_light
+    scene bg entrance
     with travel
     "{i}А вот и причина моей бессонницы, гнездо невылупившихся научных достижений, вскормленных образовательной бюрократией…?{/i}"
     "{i}...{/i}"
@@ -121,9 +131,9 @@ label uni_entrance:
 
     scene black
     with fade
-    scene bg class_entrance_light
+    scene bg class_entrance
     with pause_fade
-    scene bg class_light
+    scene bg class_room
     with pause_fade
     scene bg class_seat
     with fade
@@ -147,7 +157,7 @@ label good_work:
     teacher "Станислав, будьте добры отнести эту папку на второй этаж в учебный офис."
     scene bg table
     with fade
-    "{i}Прежде чем я успел придумать отговорку или хотя бы осознать слова Марьи Ивановны,...{/i}"
+    "{i}Прежде чем я успел придумать отговорку или хотя бы осознать слова Марьи Ивановны...{/i}"
     scene bg folder
     with fade
     "{i}…она уже положила передо мной красную папку с файлами и ушла{/i}"
@@ -173,6 +183,99 @@ label good_work:
             jump go_further
 
 label look_around:
+    "{i}Я огляделся.{/i}"
+    scene bg hallway1
+    with fade
+    "{i}...{/i}"
+    show monster static
+    with fade
+    "{i}!!!{/i}"
+    "{i}Я замер.{/i}"
+    "{i}Нет-{/i}"
+    "{i}Застыл...{/i}"
+    show monster dark
+    "{i}То ли у меня потемнело в глазах, то ли в коридоре погас свет.{/i}"
+    "{i}Мразь смотрела на меня молчаливо и бездвижно… У меня подкосились ноги.{/i}"
+
+    menu:
+        "Бежать":
+            jump run
+        "Поздороваться":
+            jump greet
+
+label run:
+    show monster screamer
+    "{i}НУ НАФИГ{/i}"
+    scene stairs1
+    with bg pause_fade
+    scene stairs3
+    with bg pause_fade
+    scene bg stairs4
+    with pause_fade
+    scene bg ground2
+    with pause_fade
+
+    "{i}...{/i}"
+    "{i}Я остановился.{/i}"
+    "{i}...{/i}"
+    "{i}Оно не последовало за мной.{/i}"
+    "{i}Я только хотел выдохнуть и возможно бросить неприличное слово...{/i}"
+    scene bg ground2_dark
+    with blink
+    "{i}…как вдруг погас свет.{/i}"
+    "Ну нет… Наверх я точно один не пойду."
+    "{i}Я боялся, что та тварь всё ещё там.{/i}"
+    "Надо найти хоть кого-то здесь."
+
+    show bg ground1_dark
+    with circling
+    "..."
+    "Это что щас было?"
+    "Я же уже здесь был…"
+    "{i}Я потерялся и решил попробовать пройтись по этажу снова.{/i}"
+    show bg ground1_dark
+    with circling
+    "Да какого чёрта?!"
+    "{i}Я ходил кругами и был уже на пределе.{/i}"
+    "{i}Я был напуган до усрачки, хотел спать и просто вернуться домой!{/i}"
+    "{i}Хотелось, чтобы вся жуть, что я увидел, была простым сном.{/i}"
+    "{i}От одной мысли о сне мои глаза начали слипаться…{/i}"
+    "{i}...{/i}"
+
+    show cult corner
+    with blink
+    "{i}Человек.{/i}"
+    "{i}Человек!{/i}"
+    "{i}Я уже хотел крикнуть от радости и позвать незнакомца на помощь-{/i}"
+    show cult static
+    with fade
+    "{i}-но он подошёл ко мне сам.{/i}"
+    cultist "Что ты здесь шастаешь?"
+    "{i}Говорил он со мной явно недружелюбно. Я даже проснулся от его резкого тона и впервые в жизни начал заикаться.{/i}"
+    "Т-т-т-т-там б-была хрень к-к-какая-то. Я по-побежал, а потом п-пытался найти хоть кого-то!"
+    "Здесь лабиринт! Я-я поворачиваю - то же самое, поворачиваю - снова-"
+    "{i}Выражение на лице незнакомца совсем не поменялось от моего рассказа.{/i}"
+    "{i}Мне даже показалось, что он с таким сталкивается не в первый раз.{/i}"
+    cultist "Сынок, ты просто устал. Мало ли, что может с такими кругами под глазами почудиться."
+    "{i}{/i}"
+    "{i}{/i}"
+    "{i}{/i}"
+    "{i}{/i}"
+    ""
+    "{i}{/i}"
+    "{i}{/i}"
+    show cult close_up
+    with fade
+    cultist ""
+    "{i}{/i}"
+    ""
+    show cult screamer
+    with screamer
+    cultist "{color=#ff0000}МЫ, ПРАВЫЕ ПОСЛЕДОВАТЕЛИ ВОРОНА, ВСЕГДА ПОМОГАЕМ ЗАБЛУДШИМ ДУШАМ{/color}"
+
+    return
+
+label greet:
     pass
 
 label go_further:
@@ -193,8 +296,8 @@ label bad_work:
     "{i}...{/i}"
     "{i}В глазах будто потемнело…{/i}"
     "{i}Или передо мной была уже не Марья Ивановна.{/i}"
-    with Pause(2)
     show teacher eyes
+    with screamer
     "???" "{color=#ff0000}Забыли?{/color}"
     show teacher screamer
     with Pause(3)
