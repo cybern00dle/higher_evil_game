@@ -1,15 +1,16 @@
-﻿define headman = Character(_("Староста"), color="#c8ffc8")
-define granny = Character(_("Бабушка"), color="#c8ffc8")
-define teacher = Character(_("Марья Ивановна"), color="#c8ffc8")
-define cultist = Character(_("Культист"), color="#c8ffc8")
+﻿define headman = Character(_("Староста"), color="#ff6971")
+define granny = Character(_("Бабушка"), color="#ff6971")
+define teacher = Character(_("Марья Ивановна"), color="#ff6971")
+define cultist = Character(_("Культист"), color="#ff6971")
+define guard = Character(_("Охранник"), color="#ff6971")
 
 define circling = MultipleTransition([
     False, fade, "bg ground1_dark.png",
-    pause, "bg ground1_dark.png",
+    Pause(1.0), "bg ground1_dark.png",
     fade, "bg ground3_dark.png",
-    pause, "bg ground1_dark.png",
+    Pause(1.0), "bg ground1_dark.png",
     fade, "bg hallway6_dark.png",
-    pause, "bg ground1_dark.png",
+    Pause(1.0), "bg ground1_dark.png",
     fade, True])
 define pause_fade = MultipleTransition([False, fade, True, Pause(1.0), True])
 define screamer = MultipleTransition([False, Pause(2.0), True])
@@ -61,7 +62,7 @@ label start:
             jump sleep_in
 
 label get_up:
-    stop music
+    play sound "audio/beep.mp3"
     "{i}Надо вставать. Давай, Стас, соберись!{/i}"
     "Ну погнали."
 
@@ -95,7 +96,7 @@ label get_up:
 
 label sleep_in:
     "{i}В пень это ваше высшее образование! Я спать хочу!{/i}"
-    play music "audio/beep.mp3" noloop
+    play sound "audio/beep.mp3"
 
     scene black
     with fade
@@ -105,7 +106,7 @@ label sleep_in:
     "{color=#ff0000}БЗЗЗ-БЗЗЗ{/color}"
     "{i}Я же отключил будильник… Кто-то мне звонит.{/i}"
     "{color=#ff0000}БЗЗЗ-БЗ-бип{/color}"
-    play music "audio/beep.mp3" noloop
+    play sound "audio/beep.mp3"
 
     "Алё?"
     "???" "{color=#ff0000}СТАС, ТЫ ДУРНОЙ? ТЫ ГДЕ?{/color}"
@@ -114,7 +115,7 @@ label sleep_in:
     headman "Дома он! Ну зашибись!"
     headman "А ничего, что у нас сегодня последний день для сдачи доклада? Ты свой так и не принёс!"
     headman "А НУ МАРШ НА ПАРЫ!!"
-    play music "audio/beep.mp3" noloop
+    play sound "audio/beep.mp3"
 
     "{i}Я и слова сказать не успел. Я уже натягивал на себя штаны.{/i}"
     "{i}И как я мог забыть про дедлайн? Я же эту работу последние дня два писал.{/i}"
@@ -274,7 +275,7 @@ label run:
     with screamer
     cultist "{color=#ff0000}МЫ, ПРАВЫЕ ПОСЛЕДОВАТЕЛИ ВОРОНА, ВСЕГДА ПОМОГАЕМ ЗАБЛУДШИМ ДУШАМ{/color}"
 
-    return
+    jump you_died
 
 label greet:
     "{i}Я сглотнул, прежде чем открыл рот.{/i}"
@@ -336,10 +337,138 @@ label enter:
     show creature screamer
     with screamer
 
-    return
+    jump you_died
 
 label knock:
-    pass
+    "Всё-таки заходить без стука нельзя… Меня же не в пещере растили."
+    play sound "audio/knock.mp3"
+    "{i}Я постучался и за дверью тут же послышался неловкий шорох. Будто кто-то бегал по кабинету, пытаясь найти, откуда прозвучал стук.{/i}"
+    "{i}Я постучал ещё разок и дверь тут же приоткрылась.{/i}"
+    show face static
+    with fade
+    "{i}!{/i}"
+    "{i}Я чуть вздрогнул от неожиданности.{/i}"
+    "{i}Незнакомец смотрел на меня бдительно около минуты, ничего не говоря...{/i}"
+    scene bd door_open
+    with fade
+    "{i}…а потом скрылся.{/i}"
+    show face hand
+    with fade
+    "{i}Вместо него показалась рука в довольно странном положении.{/i}"
+    "{i}Я предположил, что он ждал, когда я отдам ему папку.{/i}"
+    show face folder
+    "{i}Ну я её и положил.{/i}"
+    scene bg door_open
+    with fade
+    "{i}Рука тут же исчезла за дверью вместе с папкой.{/i}"
+    "{i}Я был готов уходить, но услышал уже знакомый шорох.{/i}"
+    show face flashlight
+    with fade
+    "{i}Фонарик?{/i}"
+    "{i}Я недоумевал, зачем он мне и почему мне его вообще дают.{/i}"
+    "{i}Но отказываться, мне казалось, было бы грубо.{/i}"
+
+    $ flashlight = True
+    show face hand
+    with Pause(0.5)
+    scene bg door_closed
+    with fade
+    "{i}Это было…{/i}"
+    "{i}… странно.{/i}"
+    "{i}Но я решил списать неловкое чувство на сонливость и пойти на следующие пары.{/i}"
+
+    jump study
+
+label study:
+    scene black
+    with fade
+    "{i}Весь день я сидел на парах, пытался заработать накоп на семинарах и хоть что-то законспектировать на лекциях.{/i}"
+    "{i}И весь день мне хотелось спать…{/i}"
+    "{i}В один момент я был настолько измотан, что, похоже, вырубился прямо на паре.{/i}"
+    scene bg class007
+    with fade
+    "{i}А когда проснулся, то в аудитории уже никого не было…{/i}"
+    "Меня просто оставили здесь."
+    "{i}Не было сил даже на то, чтобы возмущаться. Хотелось просто, наконец-то, уйти домой.{/i}"
+    scene bg hallway2_dark
+    with fade
+    "{i}Было темно…{/i}"
+    "Неужели все уже ушли?"
+    show stair_creature dark
+    with fade
+    "{i}?!{/i}"
+    "{i}Человек?{/i}"
+    "{i}На человека оно не было похожим.{/i}"
+    "{i}Скорее на его останки.{/i}"
+    "{i}Я решил пройти мимо этого нечто так, чтобы оно не заметило меня.{/i}"
+    scene bg stairs4_dark
+    with fade
+    "{i}Медленно и тихо крадясь, я добрался до первого этажа.{/i}"
+    "{i}Я выдохнул с облегчением…{/i}"
+    show stair_creature follow
+    with fade
+    "{i}…пока не увидел, что оно начало меня преследовать.{/i}"
+    scene bg exit1_dark
+    with fade
+    "{i}Я побежал к выходу.{/i}"
+    scene bg exit2_dark
+    with fade
+    "{i}!{/i}"
+    "{i}Заперто!{/i}"
+    "{i}Были слышны его шаги. Оно приближалось.{/i}"
+    scene bg defense_door
+    with fade
+    "{i}Я подбежал к двери, которая отделяла меня и чудище и схватился за ручку, уперевшись ногой в дверную раму.{/i}"
+    play music "audio/bang.mp3"
+    show doorman knock
+    "{i}Оно билось в дверное стекло, не жалея себя или меня.{/i}"
+    "{color=#ff0000}БУМ БУМ БУМ{/color}"
+    "{i}Моих сил явно не хватало.{/i}"
+
+    if flashlight:
+        jump good_ending
+    else:
+        jump creature_trap
+
+label good_ending:
+    "{i}Надежды на то, что я смогу продержаться ещё хоть секунду, не было.{/i}"
+    stop music
+    "{i}Отпустив ручку двери, я схватил первое попавшееся, чем мог защитить себя.{/i}"
+    "{i}Фонарик.{/i}"
+    "{i}Я включил его совершенно случайно.{/i}"
+    show doorman light
+    with fade
+    scene bg defense_light
+    with fade
+    "{i}Тварь, что так яростно долбилась в дверь, сбежала с воплями.{/i}"
+    "{i}...{/i}"
+    "{i}Я сидел с включённым фонариком, ощущая стекающий с себя холодный пот ещё минуту, пока не пришёл охранник.{/i}"
+
+    show guard static
+    guard "Парень, ты чё тут делаешь?"
+    "{i}Я уже не был уверен, что со мной разговаривает человек.{/i}"
+    guard "А ну марш домой! Нечего в вузе ночью делать."
+    "{i}Он спокойной открыл ключами ранее запертую дверь и распахнул её перед моим носом.{/i}"
+    "{i}Я сбежал оттуда так быстро, как только мог…{/i}"
+
+    scene bg dorm_dark
+    with travel
+    "Я дома..."
+    "{i}Мечтая забыть, что я сегодня пережил, я бросил свою измученную тушу на кровать.{/i}"
+    scene black
+    with fade
+    "{i}Это всё из-за бессонницы...{/i}"
+
+    jump you_won
+
+label creature_trap:
+    "{color=#ff0000}БУМ БУМ БУМ{/color}"
+    "{i}Я больше не мог держать дверь-{/i}"
+    stop music
+    show doorman screamer
+    with screamer
+
+    jump you_died
 
 label bad_work:
     "{i}...{/i}"
@@ -363,5 +492,32 @@ label bad_work:
     with Pause(3)
     scene black
     with fade
+
+    jump you_died
+
+label you_won:
+    scene black
+    with Pause(1)
+
+    show text "Приятных сновидений" with dissolve
+    with Pause(2)
+
+    show text "Игра пройдена" with dissolve
+    with Pause(2)
+
+    hide text with dissolve
+    with Pause(1)
+
+    return
+
+label you_died:
+    scene black
+    with Pause(1)
+
+    show text "{color=#ff0000}Игра окончена{/color}" with dissolve
+    with Pause(5)
+
+    hide text with dissolve
+    with Pause(1)
 
     return
