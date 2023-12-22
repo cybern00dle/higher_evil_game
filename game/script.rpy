@@ -40,7 +40,7 @@ label splashscreen:
 
 label start:
     scene black
-    play music "alarm_clock.mp3"
+    play music "alarm_clock.mp3" volume 0.5
 
     "{color=#ff0000}БИП БИП БИП{/color}"
     "{i}Утро? Уже?{/i}"
@@ -62,6 +62,7 @@ label start:
             jump sleep_in
 
 label get_up:
+    stop music
     play sound "audio/beep.mp3"
     "{i}Надо вставать. Давай, Стас, соберись!{/i}"
     "Ну погнали."
@@ -96,6 +97,7 @@ label get_up:
 
 label sleep_in:
     "{i}В пень это ваше высшее образование! Я спать хочу!{/i}"
+    stop music
     play sound "audio/beep.mp3"
 
     scene black
@@ -106,6 +108,7 @@ label sleep_in:
     "{color=#ff0000}БЗЗЗ-БЗЗЗ{/color}"
     "{i}Я же отключил будильник… Кто-то мне звонит.{/i}"
     "{color=#ff0000}БЗЗЗ-БЗ-бип{/color}"
+    stop music
     play sound "audio/beep.mp3"
 
     "Алё?"
@@ -131,6 +134,7 @@ label uni_entrance:
     "{i}О чём это я?{/i}"
     "{i}Ах да! Пора на пары.{/i}"
 
+    play music "audio/walk.mp3"
     scene black
     with fade
     scene bg class_entrance
@@ -139,6 +143,7 @@ label uni_entrance:
     with pause_fade
     scene bg class_seat
     with fade
+    stop music
     "{i}На пару я чуть опоздал, но ничего страшного - Марья Ивановна не заметила.{/i}"
     "{i}Я тихо отсидел все 80 минут и собирался сдать доклад.{/i}"
 
@@ -166,6 +171,7 @@ label good_work:
     "Хорошо..."
 
     "{i}Пришлось подняться на второй этаж.{/i}"
+    play music "audio/walk.mp3"
     scene bg stairs4
     with pause_fade
     scene bg stairs3
@@ -174,6 +180,7 @@ label good_work:
     with pause_fade
     scene bg hallway1
     with pause_fade
+    stop music
     "{i}Я не мог вспомнить, какой из кабинетов был учебным офисом.{/i}"
     "{i}А спросить было стыдно…{/i}"
     "{i}Третий курс всё же.{/i}"
@@ -208,6 +215,7 @@ label look_around:
 label run:
     show monster screamer
     "{i}НУ НАФИГ{/i}"
+    play music "audio/run.mp3"
     scene bg stairs1
     with pause_fade
     scene bg stairs3
@@ -216,6 +224,7 @@ label run:
     with pause_fade
     scene bg ground2
     with pause_fade
+    stop music
 
     "{i}...{/i}"
     "{i}Я остановился.{/i}"
@@ -229,14 +238,18 @@ label run:
     "{i}Я боялся, что та тварь всё ещё там.{/i}"
     "Надо найти хоть кого-то здесь."
 
+    play music "audio/walk.mp3"
     show bg ground1_dark
     with circling
+    stop music
     "..."
     "Это что щас было?"
     "Я же уже здесь был…"
     "{i}Я потерялся и решил попробовать пройтись по этажу снова.{/i}"
+    play music "audio/walk.mp3"
     show bg ground1_dark
     with circling
+    stop music
     "Да какого чёрта?!"
     "{i}Я ходил кругами и был уже на пределе.{/i}"
     "{i}Я был напуган до усрачки, хотел спать и просто вернуться домой!{/i}"
@@ -301,12 +314,14 @@ label greet:
 
 label go_further:
     "{i}Я решил пойти в одном направлении, пока не вспомню номер кабинета.{/i}"
+    play music "audio/walk.mp3"
     scene bg hallway2
     with pause_fade
     scene bg hallway4
     with pause_fade
     scene bg door_closed
     with pause_fade
+    stop music
     "Вроде здесь."
     "{i}Всё бы ничего, но я слышал странные звуки, идущие из кабинета.{/i}"
     "{i}Чавканье?{/i}"
@@ -349,7 +364,7 @@ label knock:
     "{i}!{/i}"
     "{i}Я чуть вздрогнул от неожиданности.{/i}"
     "{i}Незнакомец смотрел на меня бдительно около минуты, ничего не говоря...{/i}"
-    scene bd door_open
+    scene bg door_open
     with fade
     "{i}…а потом скрылся.{/i}"
     show face hand
@@ -408,6 +423,7 @@ label study:
     show stair_creature follow
     with fade
     "{i}…пока не увидел, что оно начало меня преследовать.{/i}"
+    play music "audio/run.mp3"
     scene bg exit1_dark
     with fade
     "{i}Я побежал к выходу.{/i}"
