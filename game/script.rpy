@@ -8,15 +8,7 @@ define teacher = Character(_("Марья Ивановна"), color="#ff6971")
 define cultist = Character(_("Культист"), color="#ff6971")
 define guard = Character(_("Охранник"), color="#ff6971")
 
-define circling = MultipleTransition([
-    False, fade, "bg ground1_dark.png",
-    Pause(1.0), "bg ground1_dark.png",
-    fade, "bg ground3_dark.png",
-    Pause(1.0), "bg ground3_dark.png",
-    fade, "bg hallway6_dark.png",
-    Pause(1.0), "bg hallway6_dark.png",
-    fade, True])
-define death_screen = MultipleTransition([False, Pause(3), False, fade, True])
+define death_screen = MultipleTransition([False, Pause(2.0), False, fade, True])
 define pause_fade = MultipleTransition([False, fade, True, Pause(1.0), True])
 define blink = Fade(0.5, 0.5, 0.5)
 define travel = Fade(0.5, 1.0, 0.5)
@@ -134,7 +126,7 @@ label sleep_in:
     jump uni_entrance
 
 label uni_entrance:
-    play music "audio/theme.mp3"
+    play music "audio/theme.mp3" volume 0.5
     scene bg entrance
     with travel
     "{i}А вот и причина моей бессонницы, гнездо невылупившихся научных достижений, вскормленных образовательной бюрократией…?{/i}"
@@ -215,6 +207,7 @@ label look_around:
     "{i}Нет-{/i}"
     "{i}Застыл...{/i}"
     show monster dark
+    with fade
     "{i}То ли у меня потемнело в глазах, то ли в коридоре погас свет.{/i}"
     "{i}Мразь смотрела на меня молчаливо и бездвижно… У меня подкосились ноги.{/i}"
 
@@ -256,7 +249,13 @@ label run:
 
     play long_sfx "audio/walk.mp3"
     show bg ground1_dark
-    with circling
+    with pause_fade
+    show bg ground3_dark
+    with pause_fade
+    show bg hallway6_dark
+    with pause_fade
+    show bg ground1_dark
+    with pause_fade
     stop long_sfx
     "..."
     "Это что щас было?"
@@ -264,7 +263,13 @@ label run:
     "{i}Я потерялся и решил попробовать пройтись по этажу снова.{/i}"
     play long_sfx "audio/walk.mp3"
     show bg ground1_dark
-    with circling
+    with pause_fade
+    show bg ground3_dark
+    with pause_fade
+    show bg hallway6_dark
+    with pause_fade
+    show bg ground1_dark
+    with pause_fade
     stop long_sfx
     "Да какого чёрта?!"
     "{i}Я ходил кругами и был уже на пределе.{/i}"
@@ -320,7 +325,8 @@ label greet:
     scene black
     with fade
     "{i}От яркого света у меня заболели глаза и я прикрыл их лишь на секунду.{/i}"
-    play music "audio/theme.mp3"
+
+    play music "audio/theme.mp3" volume 0.5
     show monster human
     with fade
     "{i}А когда я их открыл, передо мной уже стоял менеджер нашего потока…{/i}"
@@ -345,7 +351,7 @@ label go_further:
     scene bg door_closed
     with pause_fade
     stop long_sfx
-    play music "audio/theme.mp3"
+    play music "audio/theme.mp3" volume 0.5
     "Вроде здесь."
     play long_sfx "audio/chewing.mp3"
     "{i}Всё бы ничего, но я слышал странные звуки, идущие из кабинета.{/i}"
@@ -435,7 +441,7 @@ label knock:
     jump study
 
 label study:
-    play music "audio/theme.mp3"
+    play music "audio/theme.mp3" volume 0.5
     scene black
     with fade
     "{i}Весь день я сидел на парах, пытался заработать накоп на семинарах и хоть что-то законспектировать на лекциях.{/i}"
@@ -506,7 +512,7 @@ label good_ending:
     "{i}...{/i}"
     "{i}Я сидел с включённым фонариком, ощущая стекающий с себя холодный пот ещё минуту, пока не пришёл охранник.{/i}"
 
-    play music "audio/theme.mp3"
+    play music "audio/theme.mp3" volume 0.5
     show guard static
     guard "Парень, ты чё тут делаешь?"
     "{i}Я уже не был уверен, что со мной разговаривает человек.{/i}"
