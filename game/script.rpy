@@ -1,4 +1,4 @@
-﻿init python:
+init python:
     renpy.music.register_channel("long_sfx", "sfx", True)
     renpy.music.register_channel("screamer", "sfx", True)
 
@@ -12,9 +12,9 @@ define circling = MultipleTransition([
     False, fade, "bg ground1_dark.png",
     Pause(1.0), "bg ground1_dark.png",
     fade, "bg ground3_dark.png",
-    Pause(1.0), "bg ground1_dark.png",
+    Pause(1.0), "bg ground3_dark.png",
     fade, "bg hallway6_dark.png",
-    Pause(1.0), "bg ground1_dark.png",
+    Pause(1.0), "bg hallway6_dark.png",
     fade, True])
 define death_screen = MultipleTransition([False, Pause(3), False, fade, True])
 define pause_fade = MultipleTransition([False, fade, True, Pause(1.0), True])
@@ -35,9 +35,6 @@ label splashscreen:
     with Pause(1)
 
     show text "Приятного пробуждения." with dissolve
-    with Pause(5)
-
-    show text "Мяу." with dissolve
     with Pause(5)
 
     hide text with dissolve
@@ -325,7 +322,7 @@ label greet:
     with fade
     "{i}От яркого света у меня заболели глаза и я прикрыл их лишь на секунду.{/i}"
     play music "audio/theme.mp3"
-    show motster human
+    show monster human
     with fade
     "{i}А когда я их открыл, передо мной уже стоял менеджер нашего потока…{/i}"
     "Здравствуйте."
@@ -469,8 +466,9 @@ label study:
     show stair_creature follow
     with fade
     "{i}…пока не увидел, что оно начало меня преследовать.{/i}"
+label TestSpot3:
     play music "audio/chase.mp3" volume 0.5
-    play long_sfx "audio/run.mp3"
+    play long_sfx "audio/run.mp3" volume 2
     scene bg exit1_dark
     with fade
     "{i}Я побежал к выходу.{/i}"
@@ -482,7 +480,7 @@ label study:
     scene bg defense_door
     with fade
     "{i}Я подбежал к двери, которая отделяла меня и чудище и схватился за ручку, уперевшись ногой в дверную раму.{/i}"
-    play long_sfx "audio/bang.mp3" volume 2
+    play long_sfx "audio/bang.mp3" volume 3
     show doorman knock
     "{i}Оно билось в дверное стекло, не жалея себя или меня.{/i}"
     "{color=#ff0000}БУМ БУМ БУМ{/color}"
@@ -533,12 +531,12 @@ label creature_trap:
     "{color=#ff0000}БУМ БУМ БУМ{/color}"
     "{i}Я больше не мог держать дверь-{/i}"
     stop long_sfx
+    stop music
     with Pause(2)
-    play screamer "audio/scream.mp3"
+    play screamer "audio/scream.mp3" volume 5 noloop
     show doorman screamer
     scene black
     with death_screen
-    stop screamer
 
     jump you_died
 
