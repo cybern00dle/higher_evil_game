@@ -37,6 +37,9 @@ label splashscreen:
     show text "Приятного пробуждения." with dissolve
     with Pause(5)
 
+    show text "Мяу." with dissolve
+    with Pause(5)
+
     hide text with dissolve
     with Pause(1)
 
